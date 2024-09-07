@@ -24,7 +24,7 @@ public class ProductEntity {
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "tb_category_id")
     private CategoryEntity category;
 

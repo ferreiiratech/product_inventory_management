@@ -19,6 +19,7 @@ public interface IProductService {
             Optional<String> categoryName,
             Optional<BigDecimal> minPrice,
             Optional<BigDecimal> maxPrice,
+            Optional<Boolean> isAvailable,
             int page,
             int size
     );

@@ -73,6 +73,7 @@ public class ProductServiceImpl implements IProductService {
             Optional<String> categoryName,
             Optional<BigDecimal> minPrice,
             Optional<BigDecimal> maxPrice,
+            Optional<Boolean> isAvailable,
             int page,
             int size
     ) {
@@ -110,6 +111,11 @@ public class ProductServiceImpl implements IProductService {
                                 .getPrice().compareTo(maxPrice.get()) <= 0
 
                         ).toList();
+            }
+
+            if(isAvailable.isPresent() && isAvailable.get()) {
+                productList = productList.stream()
+                        .filter(ProductEntity::isAvailable).toList();
             }
 
             List<ProductResponseDTO> productEntityList = new ArrayList<>();

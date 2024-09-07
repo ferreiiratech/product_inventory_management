@@ -38,6 +38,11 @@ public class ProductEntity {
 
     public ProductEntity() {}
 
+    @Transient
+    public boolean isAvailable() {
+        return this.quantity > 0;
+    }
+
     public Long getId() {
         return id;
     }

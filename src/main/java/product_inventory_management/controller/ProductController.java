@@ -35,13 +35,14 @@ public class ProductController {
     @GetMapping("/search")
     public ResponseEntity<SearchProductResponseDTO> searchProducts(
             @RequestParam Optional<String> name,
-            @RequestParam(defaultValue = "1") Optional<BigDecimal> minPrice,
-            @RequestParam(defaultValue = "8000") Optional<BigDecimal> maxPrice,
-            @RequestParam Optional<String> categoryName,
+            @RequestParam(defaultValue = "0") Optional<BigDecimal> min_price,
+            @RequestParam(defaultValue = "8000") Optional<BigDecimal> max_price,
+            @RequestParam(defaultValue = "true") Optional<Boolean> is_available,
+            @RequestParam Optional<String> category_name,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        SearchProductResponseDTO productEntityList = productService.getAllProducts(name, categoryName, minPrice, maxPrice, page, size);
+        SearchProductResponseDTO productEntityList = productService.getAllProducts(name, category_name, min_price, max_price, is_available, page, size);
        return ResponseEntity.status(HttpStatus.OK).body(productEntityList);
     }
 

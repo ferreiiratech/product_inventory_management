@@ -2,6 +2,8 @@ package product_inventory_management.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import product_inventory_management.config.exceptions.AccessDatabaseFailureException;
@@ -17,6 +19,7 @@ import product_inventory_management.repository.ICategoryRepository;
 import product_inventory_management.repository.IProductRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +41,7 @@ public class ProductServiceImpl implements IProductService {
 
             Optional<ProductEntity> productFounded = productRepository.findByName(productRequestDTO.name());
 
-            if(productFounded.isPresent()) {
+            if (productFounded.isPresent()) {
                 throw new ProductNameInvalidExeception("Já existe um produto com o nome informado.");
             }
 
@@ -65,8 +68,67 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public List<ProductEntity> getAllProducts() {
-        return List.of();
+    public SearchProductResponseDTO getAllProducts(
+            Optional<String> name,
+            Optional<String> categoryName,
+            Optional<BigDecimal> minPrice,
+            Optional<BigDecimal> maxPrice,
+            int page,
+            int size
+    ) {
+        try {
+            Page<ProductEntity> productEntityPage = productRepository.findAll(PageRequest.of(page, size));
+            List<ProductEntity> productList = productEntityPage.getContent();
+
+            if (name.isPresent()) {
+                productList = productList.stream()
+                        .filter(productEntity -> productEntity
+                                .getName().toLowerCase()
+                                .contains(name.get().toLowerCase())
+                        ).toList();
+            }
+
+            if (categoryName.isPresent()) {
+                productList = productList.stream()
+                        .filter(productEntity -> productEntity
+                                .getCategory().getName().toLowerCase()
+                                .contains(categoryName.get().toLowerCase())
+                        ).toList();
+            }
+
+            if (minPrice.isPresent()) {
+                productList = productList.stream()
+                        .filter(productEntity -> productEntity
+                                .getPrice().compareTo(minPrice.get()) >= 0
+
+                        ).toList();
+            }
+
+            if (maxPrice.isPresent()) {
+                productList = productList.stream()
+                        .filter(productEntity -> productEntity
+                                .getPrice().compareTo(maxPrice.get()) <= 0
+
+                        ).toList();
+            }
+
+            List<ProductResponseDTO> productEntityList = new ArrayList<>();
+            productList.forEach(productEntity -> productEntityList.add(
+                    new ProductResponseDTO(
+                        productEntity.getName(),
+                        productEntity.getPrice(),
+                        productEntity.getDescription(),
+                        productEntity.getQuantity(),
+                        productEntity.getCategory().getName()
+            )));
+
+            return new SearchProductResponseDTO(
+                    "Pesquisa realizada com sucesso",
+                    productEntityList
+            );
+        } catch (DataAccessResourceFailureException ex){
+            throw new AccessDatabaseFailureException("Ocorreu um erro interno. Tente novamente mais tarde");
+        }
     }
 
     @Override
@@ -88,24 +150,14 @@ public class ProductServiceImpl implements IProductService {
                             productFound.get().getCategory().getName()
                     )
             );
-        } catch (DataAccessResourceFailureException exception){
+        } catch (DataAccessResourceFailureException exception) {
             throw new AccessDatabaseFailureException("Ocorreu um erro interno. Tente novamente mais tarde");
         }
     }
 
     @Override
-    public ProductEntity getProductByName(String name) {
-        return null;
-    }
-
-    @Override
-    public List<ProductEntity> getProductsByPriceRange(double lower, double upper) {
-        return List.of();
-    }
-
-    @Override
     @Transactional
-    public ProductUpdatedResponseDTO updateProduct(Long productId, ProductRequestDTO productUpdateRequestDTO){
+    public ProductUpdatedResponseDTO updateProduct(Long productId, ProductRequestDTO productUpdateRequestDTO) {
         try {
             validateProductData(productUpdateRequestDTO);
 
@@ -157,21 +209,21 @@ public class ProductServiceImpl implements IProductService {
         }
     }
 
-    private void validateProductData(ProductRequestDTO productRequestDTO){
-        if(productRequestDTO.name() == null){
+    private void validateProductData(ProductRequestDTO productRequestDTO) {
+        if (productRequestDTO.name() == null) {
             throw new ProductNameInvalidExeception("O nome do produto é inválido");
         }
 
-        if(productRequestDTO.price().compareTo(BigDecimal.ZERO) < 0){
+        if (productRequestDTO.price().compareTo(BigDecimal.ZERO) < 0) {
             throw new ProductPriceInvalidException("O valor do produto não pode ser negativo");
         }
 
-        if(productRequestDTO.quantity() < 0){
+        if (productRequestDTO.quantity() < 0) {
             throw new ProductReportedQuantityException("A quantidade informada do produto não pode ser menor que zero ou nulo");
         }
     }
 
-    private CategoryEntity getExistingCategory(String categoryName){
+    private CategoryEntity getExistingCategory(String categoryName) {
         try {
             Optional<CategoryEntity> categoryFound = categoryRepository.findByName(categoryName);
 

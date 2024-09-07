@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import product_inventory_management.dto.*;
 import product_inventory_management.service.IProductService;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
@@ -27,6 +30,19 @@ public class ProductController {
         GetProductResponseDTO productFound = productService.getProductById(productId);
 
         return ResponseEntity.status(HttpStatus.OK).body(productFound);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<SearchProductResponseDTO> searchProducts(
+            @RequestParam Optional<String> name,
+            @RequestParam(defaultValue = "1") Optional<BigDecimal> minPrice,
+            @RequestParam(defaultValue = "8000") Optional<BigDecimal> maxPrice,
+            @RequestParam Optional<String> categoryName,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        SearchProductResponseDTO productEntityList = productService.getAllProducts(name, categoryName, minPrice, maxPrice, page, size);
+       return ResponseEntity.status(HttpStatus.OK).body(productEntityList);
     }
 
     @PatchMapping("/{productId}")

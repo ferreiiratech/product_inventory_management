@@ -1,4 +1,4 @@
-package product_inventory_management.service;
+package product_inventory_management.service.product;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataAccessResourceFailureException;
@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import product_inventory_management.config.exceptions.AccessDatabaseFailureException;
-import product_inventory_management.dto.*;
+import product_inventory_management.dto.product.*;
 import product_inventory_management.model.category.CategoryEntity;
 import product_inventory_management.model.category.exception.CategoryNotFoundException;
 import product_inventory_management.model.product.ProductEntity;
@@ -68,7 +68,7 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public SearchProductResponseDTO getAllProducts(
+    public SearchProductResponseDTO searchProducts(
             Optional<String> name,
             Optional<String> categoryName,
             Optional<BigDecimal> minPrice,

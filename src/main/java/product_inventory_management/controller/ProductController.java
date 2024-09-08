@@ -3,8 +3,8 @@ package product_inventory_management.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import product_inventory_management.dto.*;
-import product_inventory_management.service.IProductService;
+import product_inventory_management.dto.product.*;
+import product_inventory_management.service.product.IProductService;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -42,13 +42,19 @@ public class ProductController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        SearchProductResponseDTO productEntityList = productService.getAllProducts(name, category_name, min_price, max_price, is_available, page, size);
+        SearchProductResponseDTO productEntityList = productService.searchProducts(name, category_name, min_price, max_price, is_available, page, size);
        return ResponseEntity.status(HttpStatus.OK).body(productEntityList);
     }
 
     @PatchMapping("/{productId}")
-    public ResponseEntity<ProductUpdatedResponseDTO> UpdateProduct(@PathVariable Long productId, @RequestBody ProductRequestDTO quantityReduceRequestDTO){
-        ProductUpdatedResponseDTO productUpdatedResponseDTO = productService.updateProduct(productId, quantityReduceRequestDTO);
+    public ResponseEntity<ProductUpdatedResponseDTO> UpdateProduct(
+            @PathVariable Long productId,
+            @RequestBody ProductRequestDTO quantityReduceRequestDTO
+    ){
+        ProductUpdatedResponseDTO productUpdatedResponseDTO = productService.updateProduct(
+                productId,
+                quantityReduceRequestDTO
+        );
         return ResponseEntity.status(HttpStatus.OK).body(productUpdatedResponseDTO);
     }
 

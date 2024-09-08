@@ -17,8 +17,10 @@ public class ProductEntity {
     private Long id;
     @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private BigDecimal price;
     private String description;
+    @Column(nullable = false)
     private int quantity;
     @CreatedDate
     private LocalDateTime createdAt;

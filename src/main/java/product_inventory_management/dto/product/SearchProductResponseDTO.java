@@ -1,4 +1,4 @@
-package product_inventory_management.dto;
+package product_inventory_management.dto.product;
 
 import java.util.List;
 

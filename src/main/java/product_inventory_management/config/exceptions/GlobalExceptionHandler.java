@@ -5,7 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import product_inventory_management.dto.ExceptionResponseDTO;
+import product_inventory_management.dto.exception.ExceptionResponseDTO;
+import product_inventory_management.model.category.exception.CategoryNameInvalidExeception;
 import product_inventory_management.model.category.exception.CategoryNotFoundException;
 import product_inventory_management.model.product.exception.ProductNameInvalidExeception;
 import product_inventory_management.model.product.exception.ProductNotFoundException;
@@ -48,5 +49,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductPriceInvalidException.class)
     public ResponseEntity<ExceptionResponseDTO> handleProductPriceInvalidException(ProductPriceInvalidException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(CategoryNameInvalidExeception.class)
+    public ResponseEntity<ExceptionResponseDTO> handleCategoryNameInvalidExeception(CategoryNameInvalidExeception ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponseDTO(ex.getMessage()));
     }
 }

@@ -8,7 +8,7 @@ import product_inventory_management.dto.category.CategoryRequestDTO;
 import product_inventory_management.dto.category.CategoryResponseDTO;
 import product_inventory_management.model.category.CategoryEntity;
 import product_inventory_management.model.category.exception.CategoryNameInvalidExeception;
-import product_inventory_management.repository.ICategoryRepository;
+import product_inventory_management.repository.category.ICategoryRepository;
 
 import java.util.Optional;
 
@@ -33,7 +33,7 @@ public class CategoryServiceImpl implements ICategoryService {
                 throw new CategoryNameInvalidExeception("O nome da categoria já existe");
             }
 
-            CategoryEntity categoryEntity = new CategoryEntity(categoryRequestDTO.name(), categoryRequestDTO.description());
+            CategoryEntity categoryEntity = new CategoryEntity(1L, categoryRequestDTO.name(), categoryRequestDTO.description());
 
             CategoryEntity categoryCreated = categoryRepository.save(categoryEntity);
 

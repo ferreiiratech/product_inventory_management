@@ -1,4 +1,4 @@
-package product_inventory_management.controller;
+package product_inventory_management.controller.product;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -21,7 +21,7 @@ public class CategoryEntity {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public CategoryEntity(String name, String description) {
+    public CategoryEntity(long l, String name, String description) {
         this.name = name;
         this.description = description;
     }

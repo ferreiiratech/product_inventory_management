@@ -15,8 +15,8 @@ import product_inventory_management.model.product.exception.ProductNameInvalidEx
 import product_inventory_management.model.product.exception.ProductNotFoundException;
 import product_inventory_management.model.product.exception.ProductPriceInvalidException;
 import product_inventory_management.model.product.exception.ProductReportedQuantityException;
-import product_inventory_management.repository.ICategoryRepository;
-import product_inventory_management.repository.IProductRepository;
+import product_inventory_management.repository.category.ICategoryRepository;
+import product_inventory_management.repository.product.IProductRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

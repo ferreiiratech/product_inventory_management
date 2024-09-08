@@ -1,4 +1,4 @@
-package product_inventory_management.repository;
+package product_inventory_management.repository.product;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

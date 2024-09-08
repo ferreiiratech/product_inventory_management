@@ -30,7 +30,7 @@ public class ProductEntity {
     @JoinColumn(name = "tb_category_id")
     private CategoryEntity category;
 
-    public ProductEntity(String name, BigDecimal price, String description, int quantity, CategoryEntity category) {
+    public ProductEntity(long l, String name, BigDecimal price, String description, int quantity, CategoryEntity category) {
         this.name = name;
         this.price = price;
         this.description = description;

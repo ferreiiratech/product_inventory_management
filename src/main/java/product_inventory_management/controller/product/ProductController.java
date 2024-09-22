@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/product")
 public class ProductController {
     private final IProductService productService;
 

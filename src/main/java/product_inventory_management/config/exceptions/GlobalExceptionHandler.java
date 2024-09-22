@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import product_inventory_management.dto.exception.ExceptionResponseDTO;
 import product_inventory_management.model.category.exception.CategoryNameInvalidExeception;
 import product_inventory_management.model.category.exception.CategoryNotFoundException;
-import product_inventory_management.model.product.exception.ProductNameInvalidExeception;
-import product_inventory_management.model.product.exception.ProductNotFoundException;
-import product_inventory_management.model.product.exception.ProductPriceInvalidException;
-import product_inventory_management.model.product.exception.ProductReportedQuantityException;
+import product_inventory_management.model.product.exception.*;
+import product_inventory_management.model.sales.exception.DiscountInvalidException;
+import product_inventory_management.model.sales.exception.SaleQuantityInvalidException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -52,7 +51,22 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(CategoryNameInvalidExeception.class)
-    public ResponseEntity<ExceptionResponseDTO> handleCategoryNameInvalidExeception(CategoryNameInvalidExeception ex) {
+    public ResponseEntity<ExceptionResponseDTO> handleCategoryNameInvalidException(CategoryNameInvalidExeception ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponseDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(ProductNotAvailableException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleProductNotAvailableException(ProductNotAvailableException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponseDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(SaleQuantityInvalidException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleSaleQuantityInvalidException(SaleQuantityInvalidException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(DiscountInvalidException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleDiscountInvalidException(DiscountInvalidException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getMessage()));
     }
 }

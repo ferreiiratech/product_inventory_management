@@ -11,7 +11,7 @@ import product_inventory_management.dto.category.CategoryRequestDTO;
 import product_inventory_management.service.category.ICategoryService;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/category")
 public class CategoryController {
     ICategoryService categoryService;
 

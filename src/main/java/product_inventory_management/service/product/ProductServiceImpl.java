@@ -140,20 +140,16 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public GetProductResponseDTO getProductById(Long id) {
         try {
-            Optional<ProductEntity> productFound = productRepository.findById(id);
-
-            if (productFound.isEmpty()) {
-                throw new ProductNotFoundException("Produto não encontrado");
-            }
+            ProductEntity productFound = getExistingProduct(id);
 
             return new GetProductResponseDTO(
                     "Produto encontrado",
                     new ProductResponseDTO(
-                            productFound.get().getName(),
-                            productFound.get().getPrice(),
-                            productFound.get().getDescription(),
-                            productFound.get().getQuantity(),
-                            productFound.get().getCategory().getName()
+                            productFound.getName(),
+                            productFound.getPrice(),
+                            productFound.getDescription(),
+                            productFound.getQuantity(),
+                            productFound.getCategory().getName()
                     )
             );
         } catch (DataAccessResourceFailureException exception) {
@@ -167,18 +163,14 @@ public class ProductServiceImpl implements IProductService {
         try {
             validateProductData(productUpdateRequestDTO);
 
-            Optional<ProductEntity> productFound = productRepository.findById(productId);
-
-            if (productFound.isEmpty()) {
-                throw new ProductNotFoundException("Produto não encontrado");
-            }
+            ProductEntity productFound = getExistingProduct(productId);
 
             CategoryEntity categoryFound = getExistingCategory(productUpdateRequestDTO.category());
 
-            BeanUtils.copyProperties(productUpdateRequestDTO, productFound.get());
-            productFound.get().setCategory(categoryFound);
+            BeanUtils.copyProperties(productUpdateRequestDTO, productFound);
+            productFound.setCategory(categoryFound);
 
-            ProductEntity productUpdated = productRepository.save(productFound.get());
+            ProductEntity productUpdated = productRepository.save(productFound);
 
             return new ProductUpdatedResponseDTO(
                     "Produto atualizado com sucesso",
@@ -210,6 +202,20 @@ public class ProductServiceImpl implements IProductService {
             return new ProductDeletedResponseDTO(
                     "Produto deletado com sucesso"
             );
+        } catch (DataAccessResourceFailureException exception) {
+            throw new AccessDatabaseFailureException("Ocorreu um erro interno. Tente novamente mais tarde");
+        }
+    }
+
+    public ProductEntity getExistingProduct(Long productId) {
+        try {
+            Optional<ProductEntity> productFound = productRepository.findById(productId);
+
+            if (productFound.isEmpty()) {
+                throw new ProductNotFoundException("Produto não encontrado");
+            }
+
+            return productFound.get();
         } catch (DataAccessResourceFailureException exception) {
             throw new AccessDatabaseFailureException("Ocorreu um erro interno. Tente novamente mais tarde");
         }

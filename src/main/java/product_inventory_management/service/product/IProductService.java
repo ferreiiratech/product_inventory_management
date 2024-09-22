@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IProductService {
     ProductCreatedResponseDTO createProduct(ProductRequestDTO product);
-    GetProductResponseDTO getProductById(Long id) throws ProductNotFoundException;
+    GetProductResponseDTO getProductById(Long id);
     ProductUpdatedResponseDTO updateProduct(Long productId, ProductRequestDTO quantityReduceRequestDTO);
     ProductDeletedResponseDTO deleteProduct(Long id);
     SearchProductResponseDTO searchProducts(

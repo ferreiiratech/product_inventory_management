@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface IProductRepository extends JpaRepository<ProductEntity, Long> {
+    Optional<ProductEntity> findById(long id);
     Optional<ProductEntity> findByName(String name);
     Page<ProductEntity> findAll(Pageable pageable);
 }

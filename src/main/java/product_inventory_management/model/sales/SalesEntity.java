@@ -6,6 +6,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import product_inventory_management.model.product.ProductEntity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity(name = "tb_sales")
@@ -15,20 +16,23 @@ public class SalesEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Integer quantity;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "tb_product_id")
     private ProductEntity productEntity;
+    private BigDecimal price;
+    private String description;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public SalesEntity() {}
-
-    public SalesEntity(Integer quantity, ProductEntity productEntity) {
+    public SalesEntity(Integer quantity, ProductEntity productEntity, BigDecimal price) {
         this.quantity = quantity;
         this.productEntity = productEntity;
+        this.price = price;
     }
+
+    public SalesEntity() {}
 
     public Long getId() {
         return id;
@@ -54,6 +58,22 @@ public class SalesEntity {
         this.productEntity = productEntity;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -68,15 +88,5 @@ public class SalesEntity {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "SalesEntity{" +
-                ", quantity=" + quantity +
-                ", productEntity=" + productEntity +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                '}';
     }
 }

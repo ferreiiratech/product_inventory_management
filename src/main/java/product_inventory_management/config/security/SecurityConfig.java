@@ -35,6 +35,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/user/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/register").permitAll()
                         .requestMatchers(AntPathRequestMatcher.antMatcher("/h2/**")).permitAll()
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/swagger-resources/*",
+                                "/v3/api-docs/**"
+                        ).permitAll()
                         .requestMatchers(HttpMethod.POST, "/product/create").hasAuthority(UserRoleType.ADMIN.getRole())
                         .requestMatchers(HttpMethod.PATCH, "/product/*").hasAuthority(UserRoleType.ADMIN.getRole())
                         .requestMatchers(HttpMethod.DELETE, "/product/*").hasAuthority(UserRoleType.ADMIN.getRole())

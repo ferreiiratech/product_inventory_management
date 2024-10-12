@@ -1,5 +1,6 @@
 package product_inventory_management.controller.product;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ public class ProductController {
         this.productService = productService;
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
     public ResponseEntity<ProductCreatedResponseDTO> createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
         ProductCreatedResponseDTO productCreated = productService.createProduct(productRequestDTO);
@@ -46,6 +48,7 @@ public class ProductController {
        return ResponseEntity.status(HttpStatus.OK).body(productEntityList);
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PatchMapping("/{productId}")
     public ResponseEntity<ProductUpdatedResponseDTO> UpdateProduct(
             @PathVariable Long productId,
@@ -58,6 +61,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productUpdatedResponseDTO);
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @DeleteMapping("/{productId}")
     public ResponseEntity<ProductDeletedResponseDTO> deleteOneProduct(@PathVariable Long productId)  {
         ProductDeletedResponseDTO productDeletedResponseDTO = productService.deleteProduct(productId);

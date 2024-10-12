@@ -1,5 +1,6 @@
 package product_inventory_management.controller.category;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
     public ResponseEntity<CategoryCreatedResponseDTO> createCategory(@RequestBody CategoryRequestDTO categoryRequestDTO) {
         CategoryCreatedResponseDTO categoryCreatedResponseDTO = categoryService.createCategory(categoryRequestDTO);

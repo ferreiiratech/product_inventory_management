@@ -3,9 +3,11 @@ package product_inventory_management.config.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import product_inventory_management.domain.exceptions.product.*;
+import product_inventory_management.domain.exceptions.user.UserAlreadyExistsException;
 import product_inventory_management.dto.exception.ExceptionResponseDTO;
 import product_inventory_management.domain.exceptions.category.CategoryNameInvalidExeception;
 import product_inventory_management.domain.exceptions.category.CategoryNotFoundException;
@@ -68,5 +70,15 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DiscountInvalidException.class)
     public ResponseEntity<ExceptionResponseDTO> handleDiscountInvalidException(DiscountInvalidException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponseDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponseDTO(ex.getMessage()));
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ExceptionResponseDTO> handleBadCredentialsException(BadCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ExceptionResponseDTO(ex.getMessage()));
     }
 }

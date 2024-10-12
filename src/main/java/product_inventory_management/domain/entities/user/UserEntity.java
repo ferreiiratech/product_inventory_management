@@ -25,6 +25,7 @@ public class UserEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRoleType userRoleType;
     @CreatedDate
     private LocalDateTime createdAt;
@@ -62,6 +63,27 @@ public class UserEntity implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 
     public Long getId() {
         return id;

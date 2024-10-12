@@ -3,8 +3,8 @@ package product_inventory_management.config;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import product_inventory_management.model.category.CategoryEntity;
-import product_inventory_management.model.product.ProductEntity;
+import product_inventory_management.domain.entities.category.CategoryEntity;
+import product_inventory_management.domain.entities.product.ProductEntity;
 import product_inventory_management.repository.category.ICategoryRepository;
 import product_inventory_management.repository.product.IProductRepository;
 

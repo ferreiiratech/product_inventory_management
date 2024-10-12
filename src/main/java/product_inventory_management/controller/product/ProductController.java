@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import product_inventory_management.dto.product.*;
-import product_inventory_management.service.product.IProductService;
+import product_inventory_management.domain.service.IProductService;
 
 import java.math.BigDecimal;
 import java.util.Optional;

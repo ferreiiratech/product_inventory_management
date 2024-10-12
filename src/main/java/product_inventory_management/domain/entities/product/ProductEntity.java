@@ -1,10 +1,10 @@
-package product_inventory_management.model.product;
+package product_inventory_management.domain.entities.product;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import product_inventory_management.model.category.CategoryEntity;
+import product_inventory_management.domain.entities.category.CategoryEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

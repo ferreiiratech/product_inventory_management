@@ -1,13 +1,14 @@
-package product_inventory_management.service.category;
+package product_inventory_management.application.category;
 
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.stereotype.Service;
 import product_inventory_management.config.exceptions.AccessDatabaseFailureException;
+import product_inventory_management.domain.service.ICategoryService;
 import product_inventory_management.dto.category.CategoryCreatedResponseDTO;
 import product_inventory_management.dto.category.CategoryRequestDTO;
 import product_inventory_management.dto.category.CategoryResponseDTO;
-import product_inventory_management.model.category.CategoryEntity;
-import product_inventory_management.model.category.exception.CategoryNameInvalidExeception;
+import product_inventory_management.domain.entities.category.CategoryEntity;
+import product_inventory_management.domain.exceptions.category.CategoryNameInvalidExeception;
 import product_inventory_management.repository.category.ICategoryRepository;
 
 import java.util.Optional;

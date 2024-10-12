@@ -1,7 +1,6 @@
-package product_inventory_management.service.product;
+package product_inventory_management.domain.service;
 
 import product_inventory_management.dto.product.*;
-import product_inventory_management.model.product.exception.ProductNotFoundException;
 
 import java.math.BigDecimal;
 import java.util.Optional;

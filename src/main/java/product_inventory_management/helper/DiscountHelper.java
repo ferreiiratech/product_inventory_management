@@ -2,7 +2,7 @@ package product_inventory_management.helper;
 
 import org.springframework.stereotype.Component;
 import product_inventory_management.dto.sales.DiscountResultDTO;
-import product_inventory_management.model.sales.exception.DiscountInvalidException;
+import product_inventory_management.domain.exceptions.sales.DiscountInvalidException;
 
 import java.math.BigDecimal;
 import java.util.Map;

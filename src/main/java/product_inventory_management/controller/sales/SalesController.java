@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import product_inventory_management.dto.sales.SaleCreatedResponseDTO;
 import product_inventory_management.dto.sales.SaleRequestDTO;
 import product_inventory_management.dto.sales.SearchSaleRegisterDTO;
-import product_inventory_management.service.sales.ISalesService;
+import product_inventory_management.domain.service.ISalesService;
 
 @RestController
 @RequestMapping("/sale")

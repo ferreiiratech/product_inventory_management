@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import product_inventory_management.dto.category.CategoryCreatedResponseDTO;
 import product_inventory_management.dto.category.CategoryRequestDTO;
-import product_inventory_management.service.category.ICategoryService;
+import product_inventory_management.domain.service.ICategoryService;
 
 @RestController
 @RequestMapping("/category")

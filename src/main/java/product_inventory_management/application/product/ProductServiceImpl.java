@@ -1,4 +1,4 @@
-package product_inventory_management.service.product;
+package product_inventory_management.application.product;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataAccessResourceFailureException;
@@ -7,14 +7,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import product_inventory_management.config.exceptions.AccessDatabaseFailureException;
+import product_inventory_management.domain.service.IProductService;
 import product_inventory_management.dto.product.*;
-import product_inventory_management.model.category.CategoryEntity;
-import product_inventory_management.model.category.exception.CategoryNotFoundException;
-import product_inventory_management.model.product.ProductEntity;
-import product_inventory_management.model.product.exception.ProductNameInvalidExeception;
-import product_inventory_management.model.product.exception.ProductNotFoundException;
-import product_inventory_management.model.product.exception.ProductPriceInvalidException;
-import product_inventory_management.model.product.exception.ProductReportedQuantityException;
+import product_inventory_management.domain.entities.category.CategoryEntity;
+import product_inventory_management.domain.exceptions.category.CategoryNotFoundException;
+import product_inventory_management.domain.entities.product.ProductEntity;
+import product_inventory_management.domain.exceptions.product.ProductNameInvalidExeception;
+import product_inventory_management.domain.exceptions.product.ProductNotFoundException;
+import product_inventory_management.domain.exceptions.product.ProductPriceInvalidException;
+import product_inventory_management.domain.exceptions.product.ProductReportedQuantityException;
 import product_inventory_management.repository.category.ICategoryRepository;
 import product_inventory_management.repository.product.IProductRepository;
 

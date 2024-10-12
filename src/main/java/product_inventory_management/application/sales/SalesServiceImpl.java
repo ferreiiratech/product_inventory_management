@@ -1,24 +1,25 @@
-package product_inventory_management.service.sales;
+package product_inventory_management.application.sales;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import product_inventory_management.domain.service.ISalesService;
 import product_inventory_management.dto.sales.*;
 import product_inventory_management.helper.DiscountHelper;
-import product_inventory_management.model.product.ProductEntity;
-import product_inventory_management.model.product.exception.ProductNotAvailableException;
-import product_inventory_management.model.sales.SalesEntity;
-import product_inventory_management.model.sales.exception.SaleQuantityInvalidException;
+import product_inventory_management.domain.entities.product.ProductEntity;
+import product_inventory_management.domain.exceptions.product.ProductNotAvailableException;
+import product_inventory_management.domain.entities.sales.SalesEntity;
+import product_inventory_management.domain.exceptions.sales.SaleQuantityInvalidException;
 import product_inventory_management.repository.product.IProductRepository;
 import product_inventory_management.repository.sales.ISalesRepository;
-import product_inventory_management.service.product.ProductServiceImpl;
+import product_inventory_management.application.product.ProductServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class SalesServiceImpl implements ISalesService{
+public class SalesServiceImpl implements ISalesService {
     private final ISalesRepository salesRepository;
     private final ProductServiceImpl productService;
     private final IProductRepository productRepository;

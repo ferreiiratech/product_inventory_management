@@ -1,32 +1,38 @@
-package product_inventory_management.model.category;
+package product_inventory_management.domain.entities.sales;
 
 import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import product_inventory_management.domain.entities.product.ProductEntity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Entity(name = "tb_category")
+@Entity(name = "tb_sales")
 @EntityListeners(AuditingEntityListener.class)
-public class CategoryEntity {
+public class SalesEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false)
-    private String name;
+    private Integer quantity;
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "tb_product_id")
+    private ProductEntity productEntity;
+    private BigDecimal price;
     private String description;
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public CategoryEntity(long l, String name, String description) {
-        this.name = name;
-        this.description = description;
+    public SalesEntity(Integer quantity, ProductEntity productEntity, BigDecimal price) {
+        this.quantity = quantity;
+        this.productEntity = productEntity;
+        this.price = price;
     }
 
-    public CategoryEntity() {}
+    public SalesEntity() {}
 
     public Long getId() {
         return id;
@@ -36,12 +42,28 @@ public class CategoryEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public ProductEntity getProductEntity() {
+        return productEntity;
+    }
+
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     public String getDescription() {

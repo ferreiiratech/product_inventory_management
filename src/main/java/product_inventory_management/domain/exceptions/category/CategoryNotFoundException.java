@@ -1,4 +1,4 @@
-package product_inventory_management.model.category.exception;
+package product_inventory_management.domain.exceptions.category;
 
 public class CategoryNotFoundException extends RuntimeException {
     public CategoryNotFoundException(String message) {

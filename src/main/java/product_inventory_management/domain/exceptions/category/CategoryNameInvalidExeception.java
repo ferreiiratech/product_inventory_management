@@ -1,4 +1,4 @@
-package product_inventory_management.model.category.exception;
+package product_inventory_management.domain.exceptions.category;
 
 public class CategoryNameInvalidExeception extends RuntimeException {
     public CategoryNameInvalidExeception(String message) {

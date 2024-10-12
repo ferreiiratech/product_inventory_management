@@ -5,12 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import product_inventory_management.domain.exceptions.product.*;
 import product_inventory_management.dto.exception.ExceptionResponseDTO;
-import product_inventory_management.model.category.exception.CategoryNameInvalidExeception;
-import product_inventory_management.model.category.exception.CategoryNotFoundException;
-import product_inventory_management.model.product.exception.*;
-import product_inventory_management.model.sales.exception.DiscountInvalidException;
-import product_inventory_management.model.sales.exception.SaleQuantityInvalidException;
+import product_inventory_management.domain.exceptions.category.CategoryNameInvalidExeception;
+import product_inventory_management.domain.exceptions.category.CategoryNotFoundException;
+import product_inventory_management.domain.exceptions.sales.DiscountInvalidException;
+import product_inventory_management.domain.exceptions.sales.SaleQuantityInvalidException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {

@@ -1,4 +1,4 @@
-package product_inventory_management.service.sales;
+package product_inventory_management.domain.service;
 
 import product_inventory_management.dto.sales.SaleCreatedResponseDTO;
 import product_inventory_management.dto.sales.SaleRequestDTO;

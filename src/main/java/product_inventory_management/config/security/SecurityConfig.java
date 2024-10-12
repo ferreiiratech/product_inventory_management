@@ -21,9 +21,11 @@ import product_inventory_management.domain.entities.user.roles.UserRoleType;
 @EnableWebSecurity
 public class SecurityConfig {
     private final SecurityFilter securityFilter;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
-    public SecurityConfig(SecurityFilter securityFilter) {
+    public SecurityConfig(SecurityFilter securityFilter, CustomAccessDeniedHandler customAccessDeniedHandler) {
         this.securityFilter = securityFilter;
+        this.customAccessDeniedHandler = customAccessDeniedHandler;
     }
 
     @Bean
@@ -45,6 +47,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/product/*").hasAuthority(UserRoleType.ADMIN.getRole())
                         .requestMatchers(HttpMethod.POST, "/category/create").hasAuthority(UserRoleType.ADMIN.getRole())
                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                        .authenticationEntryPoint(customAccessDeniedHandler)
                 )
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

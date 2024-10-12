@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +23,7 @@ public class UserController {
     }
 
     @Operation(
-        requestBody = @RequestBody(
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
             description = "Detalhes do usuário a ser criado",
             required = true,
             content = @Content(
@@ -64,6 +63,37 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreatedResponseDTO);
     }
 
+    @Operation(
+        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+            description = "Detalhes do usuário a ser logado",
+            required = true,
+                content = @Content(
+                        schema = @Schema(implementation = UserLoginResponseDTO.class),
+                        examples = {
+                                @ExampleObject(
+                                        name = "Exemplo de Usuário ADMIN",
+                                        value =
+                                                """
+                                                {
+                                                  "username": "leoADMIN",
+                                                  "password": "123"
+                                                }
+                                                """
+                                ),
+                                @ExampleObject(
+                                        name = "Exemplo de Usuário USER",
+                                        value =
+                                                """
+                                                {
+                                                  "username": "leoUSER",
+                                                  "password": "123"
+                                                }
+                                                """
+                                )
+                        }
+                )
+        )
+    )
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponseDTO> login(@RequestBody UserLoginRequestDTO loginRequestDTO){
         UserLoginResponseDTO userLoginResponseDTO = userService.loginUser(loginRequestDTO.username(), loginRequestDTO.password());
